@@ -1,0 +1,11 @@
+bmp
+jpeg
+jpg
+png
+orf
+tif
+tiff
+raw
+avif
+heic
+heif

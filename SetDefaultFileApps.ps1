@@ -4,33 +4,13 @@ Add-Type -AssemblyName System.Windows.Forms
 # Configuration
 # ============================================================
 
-$SFTAPath = Join-Path $PSScriptRoot "SFTA.ps1"
+$SFTAPath = Join-Path $PSScriptRoot "PS-SFTA\SFTA.ps1"
+. $SFTAPath
 
-$imageExtensions = @(
-    ".bmp"
-    ".jpeg"
-    ".jpg"
-    ".png"
-    ".orf"
-    ".tif"
-    ".tiff"
-    ".raw"
-    ".avif"
-    ".heic"
-    ".heif"
-)
-
-$videoExtensions = @(
-    ".avi"
-    ".mkv"
-    ".mod"
-    ".mov"
-    ".mp4"
-    ".mpg"
-    ".mpeg"
-    ".vob"
-    ".wmv"
-)
+$VideoFormatsFilePath = Join-Path $PSScriptRoot "formats_videos.txt"
+$ImageFormatsFilePath = Join-Path $PSScriptRoot "formats_images.txt"
+$imageExtensions = Get-Content $ImageFormatsFilePath | ForEach-Object { ".$_" }
+$videoExtensions = Get-Content $VideoFormatsFilePath | ForEach-Object { ".$_" }
 
 # ============================================================
 # Check SFTA.ps1
