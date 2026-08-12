@@ -43,12 +43,12 @@ Write-Host "Selected video player: $videoExePath"
 foreach ($extension in $imageExtensions) {
 
     Write-Host "Setting $extension to $imageExeName"
-    Set-FTA "Applications\$imageExeName" $extension
+    Register-FTA $imageExePath $extension
 }
 
 # Set the video extensions
 
 foreach ($extension in $videoExtensions) {
     Write-Host "Setting $extension to $videoExeName"
-    Set-FTA "Applications\$videoExeName" $extension
+    Register-FTA $videoExePath $extension
 }
