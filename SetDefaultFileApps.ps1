@@ -5,28 +5,11 @@ Add-Type -AssemblyName System.Windows.Forms
 # ============================================================
 
 $SFTAPath = Join-Path $PSScriptRoot "PS-SFTA\SFTA.ps1"
-. $SFTAPath
 
 $VideoFormatsFilePath = Join-Path $PSScriptRoot "formats_videos.txt"
 $ImageFormatsFilePath = Join-Path $PSScriptRoot "formats_images.txt"
 $imageExtensions = Get-Content $ImageFormatsFilePath | ForEach-Object { ".$_" }
 $videoExtensions = Get-Content $VideoFormatsFilePath | ForEach-Object { ".$_" }
-
-# ============================================================
-# Check SFTA.ps1
-# ============================================================
-
-if (-not (Test-Path -LiteralPath $SFTAPath)) {
-
-    [System.Windows.Forms.MessageBox]::Show(
-        "SFTA.ps1 was not found:`n`n$SFTAPath`n`nDownload it from the PS-SFTA GitHub repository and place it next to this script.",
-        "SFTA.ps1 not found",
-        "OK",
-        "Error"
-    )
-
-    exit 1
-}
 
 # Load SFTA functions
 . $SFTAPath
@@ -241,51 +224,3 @@ foreach ($extension in $videoExtensions | Select-Object -Skip 1) {
         Write-Warning $_.Exception.Message
     }
 }
-
-# ============================================================
-# Summary
-# ============================================================
-
-Write-Host ""
-Write-Host "========================================"
-Write-Host "SUMMARY"
-Write-Host "========================================"
-Write-Host ""
-
-Write-Host "Image viewer:"
-Write-Host "  $imageExePath"
-Write-Host "  Successful: $imageSuccessCount"
-Write-Host "  Failed:     $imageFailedCount"
-
-Write-Host ""
-
-Write-Host "Video player:"
-Write-Host "  $videoExePath"
-Write-Host "  Successful: $videoSuccessCount"
-Write-Host "  Failed:     $videoFailedCount"
-
-Write-Host ""
-
-if (($imageFailedCount -eq 0) -and ($videoFailedCount -eq 0)) {
-
-    [System.Windows.Forms.MessageBox]::Show(
-        "All file associations were set successfully.",
-        "Finished",
-        "OK",
-        "Information"
-    )
-
-}
-else {
-
-    [System.Windows.Forms.MessageBox]::Show(
-        "The script finished, but some associations failed.`n`nImage failures: $imageFailedCount`nVideo failures: $videoFailedCount",
-        "Finished with errors",
-        "OK",
-        "Warning"
-    )
-}
-
-Write-Host "Done!"
-
-Read-Host "Press Enter to exit"
